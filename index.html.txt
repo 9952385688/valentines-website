@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For My Love ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ff4e78, #ff8fa3);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 20px;
+            display: none;
+        }
+
+        h1 { font-size: 30px; }
+
+        img.dp {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            box-shadow: 0 0 20px white;
+        }
+
+        .slideshow img {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .yes { background: white; color: #ff4e78; }
+        .no { background: red; color: white; position: relative; }
+
+        #passwordPage {
+            margin-top: 100px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+        }
+
+        /* Falling Hearts */
+        .heart {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="passwordPage">
+    <h2>Enter Secret Code 💌</h2>
+    <input type="password" id="pass" placeholder="Enter our special date">
+    <br><br>
+    <button onclick="checkPassword()">Unlock ❤️</button>
+</div>
+
+<div class="container" id="mainContent">
+
+    <h1>Happy Valentine's Day My Love ❤️ Subashini</h1>
+
+    <img src="dp.jpg" class="dp">
+
+    <p>
+        You are my happiness, my peace, and my forever.
+        Every moment with you is magical.
+        I love you endlessly ❤️
+        <br>— Love, Pradeesh
+    </p>
+
+    <h2>Our Beautiful Memories 📸</h2>
+    <div class="slideshow">
+        <img id="slide" src="photo1.jpg">
+    </div>
+
+    <h2>Time Since We Met ⏳</h2>
+    <p id="countdown"></p>
+
+    <h2>Our Love Story 📖</h2>
+    <p>
+        🌸 First Talk – The day everything started<br>
+        💕 First Meet – My heart knew it was you<br>
+        💍 Forever – Loading...
+    </p>
+
+    <h2>Will You Be Mine Forever? 💍</h2>
+    <button class="yes" onclick="sayYes()">Yes ❤️</button>
+    <button class="no" onmouseover="moveNo(this)">No 😆</button>
+
+</div>
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function checkPassword() {
+    var password = document.getElementById("pass").value;
+    if(password === "07052024") {   // change to your special date
+        document.getElementById("passwordPage").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    } else {
+        alert("Wrong password my love 😜 Try again!");
+    }
+}
+
+function sayYes() {
+    alert("Yayyyy ❤️ I love you forever Subashini 💍");
+}
+
+function moveNo(button) {
+    button.style.position = "absolute";
+    button.style.left = Math.random() * window.innerWidth + "px";
+    button.style.top = Math.random() * window.innerHeight + "px";
+}
+
+/* Slideshow */
+var images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+var i = 0;
+setInterval(function() {
+    i = (i + 1) % images.length;
+    document.getElementById("slide").src = images[i];
+}, 2000);
+
+/* Countdown (Change your first meeting date) */
+var startDate = new Date("May 7, 2024 00:00:00").getTime();
+setInterval(function() {
+    var now = new Date().getTime();
+    var distance = now - startDate;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerHTML = days + " Days Together ❤️";
+}, 1000);
+
+/* Falling Hearts */
+setInterval(function() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 5000);
+}, 300);
+
+</script>
+
+</body>
+</html>
