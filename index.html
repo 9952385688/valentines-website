@@ -1,236 +1,159 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>For My Love ❤️</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story ❤️</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            color: white;
-            overflow-x: hidden;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
-        h1 {
-            margin-top: 20px;
-            animation: glow 1.5s infinite alternate;
-        }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    overflow: hidden;
+}
 
-        @keyframes glow {
-            from { text-shadow: 0 0 10px pink; }
-            to { text-shadow: 0 0 25px red, 0 0 40px hotpink; }
-        }
+/* Background Overlay */
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #3a0ca3, #000);
+    z-index: -1;
+}
 
-        .container {
-            display: none;
-            padding: 20px;
-        }
+/* Center Content */
+.container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    padding: 20px;
+}
 
-        .dp {
-            width: 200px;
-            border-radius: 50%;
-            margin-top: 15px;
-            box-shadow: 0 0 20px white;
-        }
+h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+}
 
-        .slideshow img {
-            width: 280px;
-            border-radius: 15px;
-            margin-top: 15px;
-            box-shadow: 0 0 15px white;
-        }
+.story {
+    font-size: 22px;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeIn 5s forwards;
+    animation-delay: 3s;
+}
 
-        button {
-            padding: 10px 20px;
-            border: none;
-            background: white;
-            color: hotpink;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
 
-        #passwordPage {
-            margin-top: 150px;
-        }
+/* Time Counter */
+.counter {
+    margin-top: 30px;
+    font-size: 18px;
+    opacity: 0;
+    animation: fadeIn 5s forwards;
+    animation-delay: 6s;
+}
 
-        input {
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            text-align: center;
-        }
+/* Button */
+button {
+    margin-top: 40px;
+    padding: 12px 30px;
+    font-size: 18px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
+}
 
-        .letter {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
+button:hover {
+    background: white;
+    color: black;
+}
 
-        .letter-content {
-            background: white;
-            color: black;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 400px;
-        }
+/* Floating Particles */
+.particle {
+    position: absolute;
+    color: rgba(255,255,255,0.3);
+    animation: float 15s linear infinite;
+}
 
-        .heart {
-            position: fixed;
-            color: white;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh); }
-            100% { transform: translateY(110vh); }
-        }
-    </style>
+@keyframes float {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-10vh); }
+}
+</style>
 </head>
 
 <body>
 
-<!-- PASSWORD PAGE -->
-<div id="passwordPage">
-    <h2>Enter Our Secret Code ❤️</h2>
-    <input type="password" id="pass" placeholder="Enter code">
-    <br><br>
-    <button onclick="checkPassword()">Unlock 💖</button>
-</div>
+<div class="background"></div>
 
-<!-- MAIN CONTENT -->
-<div class="container" id="mainContent">
+<div class="container">
+    <h1>Our Love Story ❤️</h1>
 
-    <h1>Happy Valentine's Day My Love 💖</h1>
-
-    <button onclick="playMusic()">🎵 Play Music</button>
-
-    <br>
-    <img src="dp.jpg" class="dp">
-
-    <p id="typeText"></p>
-
-    <h2>Our Beautiful Memories 📸</h2>
-    <div class="slideshow">
-        <img id="slide" src="photo1.jpg">
+    <div class="story">
+        It all started on August 8, 2018... <br><br>
+        A simple moment. A simple hello. <br>
+        But it became the most beautiful chapter of my life. <br><br>
+        Through smiles, tears, laughter, and dreams — <br>
+        we built something magical. ✨ <br><br>
+        And this is only the beginning...
     </div>
 
-    <h2 id="countdown"></h2>
+    <div class="counter" id="timeTogether"></div>
 
+    <button onclick="playMusic()">🎵 Play Our Song</button>
 </div>
 
-<!-- LOVE LETTER POPUP -->
-<div id="loveLetter" class="letter">
-    <div class="letter-content">
-        <h2>My Dearest ❤️</h2>
-        <p>
-            From the moment we met on August 8, 2018,
-            my life became magical.
-            You are my forever and always.
-        </p>
-        <button onclick="closeLetter()">Close 💕</button>
-    </div>
-</div>
-
-<!-- MUSIC -->
 <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-
-/* PASSWORD CHECK */
-function checkPassword() {
-    var password = document.getElementById("pass").value;
-
-    if(password === "1922") {
-        document.getElementById("passwordPage").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-        document.getElementById("loveLetter").style.display = "flex";
-        typeWriter();
-        fireworks();
-    } else {
-        alert("Wrong Secret Code ❤️");
-    }
-}
-
-/* PLAY MUSIC */
-function playMusic() {
-    var music = document.getElementById("bgMusic");
-    music.play();
-}
-
-/* CLOSE LETTER */
-function closeLetter() {
-    document.getElementById("loveLetter").style.display = "none";
-}
-
-/* TYPEWRITER EFFECT */
-var message = "You are my happiness, my peace, and my forever. I love you endlessly ❤️";
-var i = 0;
-
-function typeWriter() {
-    if (i < message.length) {
-        document.getElementById("typeText").innerHTML += message.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-    }
-}
-
-/* SLIDESHOW */
-var images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
-var index = 0;
-
-setInterval(function() {
-    index = (index + 1) % images.length;
-    document.getElementById("slide").src = images[index];
-}, 2000);
-
-/* DAYS COUNTER */
+// Time Counter
 var startDate = new Date("August 8, 2018 00:00:00").getTime();
 
 setInterval(function() {
     var now = new Date().getTime();
     var distance = now - startDate;
+
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    document.getElementById("countdown").innerHTML = days + " Days Together ❤️";
+    var years = Math.floor(days / 365);
+
+    document.getElementById("timeTogether").innerHTML =
+        "We have been together for " + years + " years and " + days + " days ❤️";
 }, 1000);
 
-/* FIREWORKS */
-function fireworks() {
-    for(let i=0; i<30; i++){
-        let spark = document.createElement("div");
-        spark.innerHTML = "✨";
-        spark.style.position = "fixed";
-        spark.style.left = Math.random()*100 + "vw";
-        spark.style.top = Math.random()*100 + "vh";
-        spark.style.fontSize = "20px";
-        document.body.appendChild(spark);
-        setTimeout(() => spark.remove(), 1000);
-    }
+// Floating particles
+function createParticle() {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    particle.innerHTML = "✨";
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.fontSize = Math.random() * 10 + 10 + "px";
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+        particle.remove();
+    }, 15000);
 }
+setInterval(createParticle, 800);
 
-/* FALLING HEARTS */
-setInterval(function() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}, 500);
-
+// Music
+function playMusic() {
+    document.getElementById("bgMusic").play();
+}
 </script>
 
 </body>
