@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Happy Valentine's Day ❤️</title>
+    <title>For My Love ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             margin: 0;
@@ -31,12 +33,14 @@
             width: 200px;
             border-radius: 50%;
             margin-top: 15px;
+            box-shadow: 0 0 20px white;
         }
 
         .slideshow img {
-            width: 300px;
+            width: 280px;
             border-radius: 15px;
             margin-top: 15px;
+            box-shadow: 0 0 15px white;
         }
 
         button {
@@ -47,6 +51,7 @@
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         #passwordPage {
@@ -57,6 +62,7 @@
             padding: 10px;
             border-radius: 10px;
             border: none;
+            text-align: center;
         }
 
         .letter {
@@ -82,7 +88,7 @@
         .heart {
             position: fixed;
             color: white;
-            animation: fall 5s linear infinite;
+            animation: fall linear infinite;
         }
 
         @keyframes fall {
@@ -91,19 +97,25 @@
         }
     </style>
 </head>
+
 <body>
 
+<!-- PASSWORD PAGE -->
 <div id="passwordPage">
-    <h2>Enter Secret Code ❤️</h2>
-    <input type="password" id="pass" placeholder="Enter our special date">
+    <h2>Enter Our Secret Code ❤️</h2>
+    <input type="password" id="pass" placeholder="Enter code">
     <br><br>
     <button onclick="checkPassword()">Unlock 💖</button>
 </div>
 
+<!-- MAIN CONTENT -->
 <div class="container" id="mainContent">
 
     <h1>Happy Valentine's Day My Love 💖</h1>
 
+    <button onclick="playMusic()">🎵 Play Music</button>
+
+    <br>
     <img src="dp.jpg" class="dp">
 
     <p id="typeText"></p>
@@ -117,6 +129,7 @@
 
 </div>
 
+<!-- LOVE LETTER POPUP -->
 <div id="loveLetter" class="letter">
     <div class="letter-content">
         <h2>My Dearest ❤️</h2>
@@ -129,9 +142,14 @@
     </div>
 </div>
 
-<audio id="bgMusic" src="music.mp3" loop></audio>
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+
+/* PASSWORD CHECK */
 function checkPassword() {
     var password = document.getElementById("pass").value;
 
@@ -139,19 +157,25 @@ function checkPassword() {
         document.getElementById("passwordPage").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
         document.getElementById("loveLetter").style.display = "flex";
-        document.getElementById("bgMusic").play();
         typeWriter();
         fireworks();
     } else {
-        alert("Wrong secret code ❤️");
+        alert("Wrong Secret Code ❤️");
     }
 }
 
+/* PLAY MUSIC */
+function playMusic() {
+    var music = document.getElementById("bgMusic");
+    music.play();
+}
+
+/* CLOSE LETTER */
 function closeLetter() {
     document.getElementById("loveLetter").style.display = "none";
 }
 
-/* Typewriter */
+/* TYPEWRITER EFFECT */
 var message = "You are my happiness, my peace, and my forever. I love you endlessly ❤️";
 var i = 0;
 
@@ -163,7 +187,7 @@ function typeWriter() {
     }
 }
 
-/* Slideshow */
+/* SLIDESHOW */
 var images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
 var index = 0;
 
@@ -172,7 +196,7 @@ setInterval(function() {
     document.getElementById("slide").src = images[index];
 }, 2000);
 
-/* Days Together */
+/* DAYS COUNTER */
 var startDate = new Date("August 8, 2018 00:00:00").getTime();
 
 setInterval(function() {
@@ -182,7 +206,7 @@ setInterval(function() {
     document.getElementById("countdown").innerHTML = days + " Days Together ❤️";
 }, 1000);
 
-/* Fireworks */
+/* FIREWORKS */
 function fireworks() {
     for(let i=0; i<30; i++){
         let spark = document.createElement("div");
@@ -196,7 +220,7 @@ function fireworks() {
     }
 }
 
-/* Falling Hearts */
+/* FALLING HEARTS */
 setInterval(function() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
