@@ -37,6 +37,12 @@ body {
     to { opacity:1; }
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.3; }
+}
+
 /* PASSWORD SCREEN */
 #passwordScreen {
     position:absolute;
@@ -81,7 +87,7 @@ button:hover {
     background-size:cover;
     background-position:center;
     opacity:0;
-    transition:opacity 2s;
+    transition:opacity 2s, transform 2s;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -89,7 +95,10 @@ button:hover {
     padding:20px;
 }
 
-.active { opacity:1; }
+.active { 
+    opacity:1; 
+    transform: scale(1.02);
+}
 
 .overlay {
     background:rgba(0,0,0,0.6);
@@ -115,8 +124,8 @@ p { font-size:22px; }
 /* Fireworks */
 .firework {
     position:absolute;
-    font-size:30px;
-    animation: explode 1s ease-out forwards;
+    font-size:20px;
+    animation: explode 2.5s ease-out forwards;
 }
 
 @keyframes explode {
@@ -132,7 +141,7 @@ p { font-size:22px; }
 
 <div id="passwordScreen">
     <h1>Enter Our Secret Code ❤️</h1>
-    <input type="password" id="passwordInput">
+    <input type="password" id="passwordInput" placeholder="Enter code">
     <button onclick="unlock()">Unlock Our Story</button>
 </div>
 
@@ -154,7 +163,6 @@ p { font-size:22px; }
     <div class="overlay">
         <h1>Will You Stay With Me Forever?</h1>
         <div id="ring">💍</div>
-        <button onclick="sayYes()">YES ❤️</button>
     </div>
 </div>
 
@@ -163,10 +171,11 @@ p { font-size:22px; }
 </audio>
 
 <script>
-let scenes=document.querySelectorAll(".scene");
-let index=0;
+// Scene management
+let scenes = document.querySelectorAll(".scene");
+let index = 0;
 
-/* STAR GENERATOR */
+// STAR GENERATOR
 function createStars(){
     const star=document.createElement("div");
     star.classList.add("star");
@@ -176,43 +185,70 @@ function createStars(){
 }
 for(let i=0;i<200;i++){ createStars(); }
 
-/* UNLOCK */
-function unlock(){
-    if(document.getElementById("passwordInput").value==="1922"){
-        document.getElementById("passwordScreen").style.display="none";
+// PRESS ENTER TO UNLOCK
+document.getElementById("passwordInput").addEventListener("keypress", function(e){
+    if(e.key === "Enter") unlock();
+});
+
+// UNLOCK FUNCTION
+function unlock() {
+    const input = document.getElementById("passwordInput").value.trim();
+    if(input === "1922") {
+        document.getElementById("passwordScreen").style.display = "none";
         scenes[0].classList.add("active");
-        let music=document.getElementById("bgMusic");
+
+        let music = document.getElementById("bgMusic");
         music.play().catch(()=>{});
+
         startScenes();
+
+        // Start mini fireworks immediately
+        repeatFireworks();
     } else {
         alert("Wrong Secret Code ❤️");
     }
 }
 
-/* Scene Change */
-function startScenes(){
-    setInterval(()=>{
+// AUTOMATIC SCENE CHANGE
+function startScenes() {
+    const audio = document.getElementById("bgMusic");
+
+    const interval = setInterval(() => {
         scenes[index].classList.remove("active");
         index++;
-        if(index<scenes.length){
+        if(index < scenes.length){
             scenes[index].classList.add("active");
+
+            if(scenes[index].id === "scene3"){
+                showRingAndFireworks();
+                twinkleScene3Stars();
+
+                // Fade-in music for cinematic effect
+                fadeInMusic(audio, 4000); // 4s fade-in
+            } else {
+                resetStars();
+            }
+
+        } else {
+            // Fade-out music after story ends
+            fadeOutMusic(audio, 4000);
+            clearInterval(interval);
         }
-    },8000);
+    }, 8000);
 }
 
-/* Counter */
-var startDate=new Date("August 8, 2018 00:00:00").getTime();
+// TIME TOGETHER COUNTER
+let startDate = new Date("August 8, 2018 00:00:00").getTime();
 setInterval(()=>{
-    var now=new Date().getTime();
-    var days=Math.floor((now-startDate)/(1000*60*60*24));
-    var years=Math.floor(days/365);
-    document.getElementById("timeTogether").innerHTML=
-    years+" Years and "+days+" Days Together ❤️";
+    let now = new Date().getTime();
+    let days = Math.floor((now-startDate)/(1000*60*60*24));
+    let years = Math.floor(days/365);
+    document.getElementById("timeTogether").innerHTML =
+    years + " Years and " + days + " Days Together ❤️";
 },1000);
 
-/* Proposal */
-function sayYes(){
-    document.getElementById("ring").style.display="block";
+// FIREWORKS FUNCTIONS
+function startFireworks(){
     for(let i=0;i<40;i++){
         const fire=document.createElement("div");
         fire.classList.add("firework");
@@ -220,8 +256,81 @@ function sayYes(){
         fire.style.left=Math.random()*100+"vw";
         fire.style.top=Math.random()*100+"vh";
         document.body.appendChild(fire);
-        setTimeout(()=>{fire.remove();},1000);
+        setTimeout(()=>{fire.remove();},2500);
     }
+}
+
+function repeatFireworks(){
+    startFireworks();
+    let fireInterval = setInterval(startFireworks,2000);
+    setTimeout(()=>clearInterval(fireInterval),20000); // lasts 20s
+}
+
+// SHOW RING AND CINEMATIC FIREWORKS IN SCENE 3
+function showRingAndFireworks() {
+    const ring = document.getElementById("ring");
+    ring.style.display = "block";
+
+    const colors = ["💖","✨","💛","💜","💙"];
+
+    function createFirework() {
+        const fire = document.createElement("div");
+        fire.classList.add("firework");
+        fire.innerHTML = colors[Math.floor(Math.random()*colors.length)];
+        fire.style.left = Math.random()*100 + "vw";
+        fire.style.top = Math.random()*100 + "vh";
+        fire.style.fontSize = 15 + Math.random()*25 + "px";
+        document.body.appendChild(fire);
+        setTimeout(()=>{fire.remove();},2500);
+    }
+
+    for(let i=0;i<50;i++){
+        setTimeout(createFirework, i*100);
+    }
+}
+
+// STARS PULSING FOR SCENE 3
+function twinkleScene3Stars(){
+    const stars = document.querySelectorAll(".star");
+    stars.forEach(star=>{
+        star.style.animation="pulse 1s infinite alternate";
+    });
+}
+
+// RESET STARS TO NORMAL TWINKLE
+function resetStars(){
+    const stars = document.querySelectorAll(".star");
+    stars.forEach(star=>{
+        star.style.animation="twinkle 2s infinite alternate";
+    });
+}
+
+// MUSIC FADE FUNCTIONS
+function fadeInMusic(audio, duration = 3000) {
+    audio.volume = 0;
+    audio.play().catch(()=>{});
+    let step = 0.05;
+    let interval = duration / (1/step);
+    let fade = setInterval(()=>{
+        if(audio.volume < 1){
+            audio.volume = Math.min(audio.volume + step, 1);
+        } else {
+            clearInterval(fade);
+        }
+    }, interval);
+}
+
+function fadeOutMusic(audio, duration = 3000) {
+    let step = 0.05;
+    let interval = duration / (1/step);
+    let fade = setInterval(()=>{
+        if(audio.volume > 0){
+            audio.volume = Math.max(audio.volume - step, 0);
+        } else {
+            audio.pause();
+            clearInterval(fade);
+        }
+    }, interval);
 }
 </script>
 
