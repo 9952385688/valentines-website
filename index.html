@@ -1,158 +1,227 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Our Love Story ❤️</title>
-
+<title>Our Forever Story ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
 body {
-    margin: 0;
-    padding: 0;
-    background: black;
-    color: white;
-    font-family: 'Playfair Display', serif;
-    overflow: hidden;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background:black;
+    font-family:'Playfair Display', serif;
+    color:white;
 }
 
-/* Background Overlay */
-.background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, #3a0ca3, #000);
-    z-index: -1;
+/* STAR SKY */
+.stars {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+    z-index:-1;
 }
 
-/* Center Content */
-.container {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-    padding: 20px;
+.star {
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation: twinkle 2s infinite alternate;
 }
 
-h1 {
-    font-size: 50px;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeIn 3s forwards;
+@keyframes twinkle {
+    from { opacity:0.2; }
+    to { opacity:1; }
 }
 
-.story {
-    font-size: 22px;
-    max-width: 700px;
-    margin: auto;
-    line-height: 1.6;
-    opacity: 0;
-    animation: fadeIn 5s forwards;
-    animation-delay: 3s;
+/* PASSWORD SCREEN */
+#passwordScreen {
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:black;
 }
 
-@keyframes fadeIn {
-    to { opacity: 1; }
+input {
+    padding:10px;
+    font-size:18px;
+    border-radius:10px;
+    border:none;
+    text-align:center;
 }
 
-/* Time Counter */
-.counter {
-    margin-top: 30px;
-    font-size: 18px;
-    opacity: 0;
-    animation: fadeIn 5s forwards;
-    animation-delay: 6s;
-}
-
-/* Button */
 button {
-    margin-top: 40px;
-    padding: 12px 30px;
-    font-size: 18px;
-    border: 2px solid white;
-    background: transparent;
-    color: white;
-    cursor: pointer;
-    transition: 0.4s;
+    margin-top:20px;
+    padding:12px 30px;
+    font-size:18px;
+    border:2px solid white;
+    background:transparent;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover {
-    background: white;
-    color: black;
+    background:white;
+    color:black;
 }
 
-/* Floating Particles */
-.particle {
-    position: absolute;
-    color: rgba(255,255,255,0.3);
-    animation: float 15s linear infinite;
+/* SCENES */
+.scene {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:opacity 2s;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
 }
 
-@keyframes float {
-    0% { transform: translateY(100vh); }
-    100% { transform: translateY(-10vh); }
+.active { opacity:1; }
+
+.overlay {
+    background:rgba(0,0,0,0.6);
+    padding:30px;
+    border-radius:15px;
+}
+
+h1 { font-size:45px; }
+p { font-size:22px; }
+
+/* RING */
+#ring {
+    font-size:80px;
+    display:none;
+    animation: zoomRing 2s forwards;
+}
+
+@keyframes zoomRing {
+    from { transform:scale(0); opacity:0; }
+    to { transform:scale(1.5); opacity:1; }
+}
+
+/* Fireworks */
+.firework {
+    position:absolute;
+    font-size:30px;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform:scale(0); opacity:1; }
+    100% { transform:scale(4); opacity:0; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="stars" id="stars"></div>
 
-<div class="container">
-    <h1>Our Love Story ❤️</h1>
-
-    <div class="story">
-        It all started on August 8, 2018... <br><br>
-        A simple moment. A simple hello. <br>
-        But it became the most beautiful chapter of my life. <br><br>
-        Through smiles, tears, laughter, and dreams — <br>
-        we built something magical. ✨ <br><br>
-        And this is only the beginning...
-    </div>
-
-    <div class="counter" id="timeTogether"></div>
-
-    <button onclick="playMusic()">🎵 Play Our Song</button>
+<div id="passwordScreen">
+    <h1>Enter Our Secret Code ❤️</h1>
+    <input type="password" id="passwordInput">
+    <button onclick="unlock()">Unlock Our Story</button>
 </div>
 
-<audio id="bgMusic" loop>
+<div class="scene" id="scene1" style="background-image:url('photo1.jpg')">
+    <div class="overlay">
+        <h1>It All Started...</h1>
+        <p>August 8, 2018 ❤️</p>
+    </div>
+</div>
+
+<div class="scene" id="scene2" style="background-image:url('photo2.jpg')">
+    <div class="overlay">
+        <h1>Our Journey</h1>
+        <p id="timeTogether"></p>
+    </div>
+</div>
+
+<div class="scene" id="scene3" style="background-image:url('photo3.jpg')">
+    <div class="overlay">
+        <h1>Will You Stay With Me Forever?</h1>
+        <div id="ring">💍</div>
+        <button onclick="sayYes()">YES ❤️</button>
+    </div>
+</div>
+
+<audio id="bgMusic">
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Time Counter
-var startDate = new Date("August 8, 2018 00:00:00").getTime();
+let scenes=document.querySelectorAll(".scene");
+let index=0;
 
-setInterval(function() {
-    var now = new Date().getTime();
-    var distance = now - startDate;
-
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var years = Math.floor(days / 365);
-
-    document.getElementById("timeTogether").innerHTML =
-        "We have been together for " + years + " years and " + days + " days ❤️";
-}, 1000);
-
-// Floating particles
-function createParticle() {
-    const particle = document.createElement("div");
-    particle.classList.add("particle");
-    particle.innerHTML = "✨";
-    particle.style.left = Math.random() * 100 + "vw";
-    particle.style.fontSize = Math.random() * 10 + 10 + "px";
-    document.body.appendChild(particle);
-
-    setTimeout(() => {
-        particle.remove();
-    }, 15000);
+/* STAR GENERATOR */
+function createStars(){
+    const star=document.createElement("div");
+    star.classList.add("star");
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+    document.getElementById("stars").appendChild(star);
 }
-setInterval(createParticle, 800);
+for(let i=0;i<200;i++){ createStars(); }
 
-// Music
-function playMusic() {
-    document.getElementById("bgMusic").play();
+/* UNLOCK */
+function unlock(){
+    if(document.getElementById("passwordInput").value==="1922"){
+        document.getElementById("passwordScreen").style.display="none";
+        scenes[0].classList.add("active");
+        let music=document.getElementById("bgMusic");
+        music.play().catch(()=>{});
+        startScenes();
+    } else {
+        alert("Wrong Secret Code ❤️");
+    }
+}
+
+/* Scene Change */
+function startScenes(){
+    setInterval(()=>{
+        scenes[index].classList.remove("active");
+        index++;
+        if(index<scenes.length){
+            scenes[index].classList.add("active");
+        }
+    },8000);
+}
+
+/* Counter */
+var startDate=new Date("August 8, 2018 00:00:00").getTime();
+setInterval(()=>{
+    var now=new Date().getTime();
+    var days=Math.floor((now-startDate)/(1000*60*60*24));
+    var years=Math.floor(days/365);
+    document.getElementById("timeTogether").innerHTML=
+    years+" Years and "+days+" Days Together ❤️";
+},1000);
+
+/* Proposal */
+function sayYes(){
+    document.getElementById("ring").style.display="block";
+    for(let i=0;i<40;i++){
+        const fire=document.createElement("div");
+        fire.classList.add("firework");
+        fire.innerHTML="🎆";
+        fire.style.left=Math.random()*100+"vw";
+        fire.style.top=Math.random()*100+"vh";
+        document.body.appendChild(fire);
+        setTimeout(()=>{fire.remove();},1000);
+    }
 }
 </script>
 
