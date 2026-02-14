@@ -22,7 +22,7 @@ body {
     background:black;
     overflow:hidden;
     z-index:-1;
-    pointer-events:none; /* allow clicks through stars */
+    pointer-events:none;
 }
 
 .star {
@@ -46,7 +46,7 @@ body {
 
 /* PASSWORD SCREEN */
 #passwordScreen {
-    position:fixed; /* fixed ensures it's always on top */
+    position:fixed;
     width:100%;
     height:100%;
     display:flex;
@@ -54,7 +54,7 @@ body {
     align-items:center;
     flex-direction:column;
     background:black;
-    z-index:9999; /* on top of everything */
+    z-index:9999;
 }
 
 input {
@@ -89,7 +89,7 @@ button:hover {
     position:absolute;
     width:100%;
     height:100%;
-    background-size: contain; /* resized to fit screen */
+    background-size: cover; /* better for cinematic zoom */
     background-repeat: no-repeat;
     background-position: center;
     opacity:0;
@@ -103,13 +103,31 @@ button:hover {
 
 .active { 
     opacity:1; 
-    transform: scale(1.02);
+    animation: kenburns 8s ease-in-out forwards;
+}
+
+@keyframes kenburns {
+    0% { transform: scale(1) translate(0,0); }
+    50% { transform: scale(1.05) translate(0, -2%); }
+    100% { transform: scale(1.1) translate(0, -4%); }
 }
 
 .overlay {
     background:rgba(0,0,0,0.6);
     padding:30px;
     border-radius:15px;
+}
+
+.overlay h1, .overlay p {
+    opacity:0;
+    transform: translateY(20px);
+    transition: opacity 2s ease, transform 2s ease;
+}
+
+.scene.active .overlay h1,
+.scene.active .overlay p {
+    opacity:1;
+    transform: translateY(0);
 }
 
 h1 { font-size:45px; }
@@ -208,7 +226,6 @@ function unlock() {
 
         startScenes();
 
-        // Start mini fireworks immediately
         repeatFireworks();
     } else {
         alert("Wrong Secret Code ❤️");
@@ -229,14 +246,12 @@ function startScenes() {
                 showRingAndFireworks();
                 twinkleScene3Stars();
 
-                // Fade-in music for cinematic effect
-                fadeInMusic(audio, 4000); // 4s fade-in
+                fadeInMusic(audio, 4000);
             } else {
                 resetStars();
             }
 
         } else {
-            // Fade-out music after story ends
             fadeOutMusic(audio, 4000);
             clearInterval(interval);
         }
@@ -269,7 +284,7 @@ function startFireworks(){
 function repeatFireworks(){
     startFireworks();
     let fireInterval = setInterval(startFireworks,2000);
-    setTimeout(()=>clearInterval(fireInterval),20000); // lasts 20s
+    setTimeout(()=>clearInterval(fireInterval),20000);
 }
 
 // SHOW RING AND CINEMATIC FIREWORKS IN SCENE 3
